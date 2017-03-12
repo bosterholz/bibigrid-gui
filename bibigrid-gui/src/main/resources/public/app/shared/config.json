@@ -1,0 +1,10 @@
+{
+  "data": [
+    { "sFlag": "m", "value": "Windstorm" },
+    { "sFlag": "mme", "value": "15" },
+    { "sFlag": "M", "value": "Magneta" },
+    { "sFlag": "Xop", "value": "Magneta" },
+    { "sFlag": "v", "value": "true" },
+    { "sFlag": "s", "value": "Tornado" }
+  ]
+}
