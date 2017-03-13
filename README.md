@@ -15,6 +15,7 @@ A browser based graphical user interface for the BiBiGrid project. (First workin
 1. clone this repository
 2. go to the ```/bibigrid-gui/src/main/resources/public``` subfolder
 3. get all necessary packages & typings by running: ```npm install```
+ - development features can be added with: ```npm install --only=dev``` after having run ```npm install```
 4. go back to your root-clone folder
 5. build your java-package using: ```mvn clean package ```
 
