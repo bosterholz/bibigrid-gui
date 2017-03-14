@@ -17,13 +17,12 @@ export class ServerCommunication {
     private getUrl: string = "http://localhost:8080/resource";
     private sendUrl: string = "http://localhost:8080//process";
     private ansUrl: string = "http://localhost:8080/answer";
-    private configUrl: string = "app/shared/config.json"
 
     constructor(private http: Http) {
     }
 
-    getConfig(): Observable<presetFlag[]> {
-        return this.http.get(this.configUrl)
+    getConfig(confPath: string): Observable<presetFlag[]> {
+        return this.http.get(confPath)
             .map(this.extractData)
             .catch(this.handleError);
     }

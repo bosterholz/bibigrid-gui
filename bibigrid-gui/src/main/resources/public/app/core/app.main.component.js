@@ -59,6 +59,7 @@ var mainPage = (function () {
         this.server.getAnswer()
             .subscribe(function (answer) { return _this.txtField += answer; }, function (error) { return _this.errorMessage = error; });
         this.txtField += '\n';
+        console.log(this.userMode);
     };
     mainPage.prototype.sendFlags = function () {
         var _this = this;
@@ -92,10 +93,15 @@ var mainPage = (function () {
                 field = '<input type="string" id="' + name + '">';
                 break;
             default:
-                "";
+                field = '<input type="text" id="' + name + '">';
+                break;
         }
         return field;
     };
+    __decorate([
+        core_1.Input(),
+        __metadata('design:type', String)
+    ], mainPage.prototype, "userMode", void 0);
     mainPage = __decorate([
         core_1.Component({
             selector: 'mainpage',

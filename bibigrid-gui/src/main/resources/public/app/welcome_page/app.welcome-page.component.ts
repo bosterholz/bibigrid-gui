@@ -56,7 +56,7 @@ import {Component, EventEmitter, Output} from "@angular/core";
         <p>"BiBiGrid?!? What's that? It sounds yummy, can I eat it?"</p>
         <p>If these or similar toughts cross your mind this choice is the right one for you.</p>
         <p>In the beginner mode all choices are made, leaving only the bare minimum for you. Basically you just have to hit the run button.</p>
-        <button class="btn pull-center" type="submit">Let's start</button>
+        <button class="btn pull-center" type="submit" (click)="chooseMode('beginner')">Let's start</button>
       </div>
     </div>
     <div class="col-sm-4">
@@ -68,7 +68,7 @@ import {Component, EventEmitter, Output} from "@angular/core";
         <p>"Stop insulting me, I know what I am doing. I am not a baby any more!"</p>
         <p>You used the BiBiGrid bevor and you are familiar with the basic flags & functions ? Then this mode is the right one for you.</p>
         <p>In the intermediate mode you have access to much more options to further tweak your grid. </p>
-        <button class="btn pull-center" type="submit">Let's start</button>
+        <button class="btn pull-center" type="submit" (click)="chooseMode('intermediate')">Let's start</button>
       </div>
     </div>
     <div class="col-sm-4">
@@ -80,7 +80,7 @@ import {Component, EventEmitter, Output} from "@angular/core";
         <p>"This site is totaly buggy. I could do a whole lot better, if I hade the time!"</p>
         <p>You could have written the BiBiGrid yourself and already know all there is to know about it? Then pick this mode.</p>
         <p>The expert mode gives you access to all available options, for the full BiBiGrid experience.</p>
-        <button class="btn pull-center" type="submit">Let's start</button>
+        <button class="btn pull-center" type="submit" (click)="chooseMode('expert')">Let's start</button>
       </div>
     </div>
   </div>
@@ -97,4 +97,14 @@ import {Component, EventEmitter, Output} from "@angular/core";
 })
 
 export class welcomePage {
+
+    @Output() notify: EventEmitter<string> = new EventEmitter<string>();
+
+    constructor() {
+    }
+
+    chooseMode(choice: string) {
+        this.notify.emit(choice);
+    }
+
 }

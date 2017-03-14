@@ -15,10 +15,11 @@ var configLoader = (function () {
     function configLoader(server, modal) {
         this.server = server;
         this.modal = modal;
+        this.masterConfigUrl = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/config.json";
     }
     configLoader.prototype.getConfig = function () {
         var _this = this;
-        this.server.getConfig()
+        this.server.getConfig(this.masterConfigUrl)
             .subscribe(function (conf) { return _this.setConfig(conf); }, function (error) { return _this.errorMessage = error; });
     };
     configLoader.prototype.setConfig = function (config) {
@@ -47,10 +48,17 @@ var configLoader = (function () {
                 .open();
         }
     };
+    configLoader.prototype.chooseConfig = function () {
+        this.modal.alert()
+            .size('lg')
+            .showClose(false)
+            .body("\n            <div class=\"dropdown\">\n            <button id=\"dLabel\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            Dropdown trigger\n            <span class=\"caret\"></span>\n            </button>\n            <ul class=\"dropdown-menu\" aria-labelledby=\"dLabel\">\n                <li><a href=\"#\">Test1</a></li>\n                <li><a href=\"#\">Test2</a></li>\n                <li><a href=\"#\">Test3</a></li>\n            </ul>\n            </div>  \n             \n            <select>\n                <option>Test</option>\n                <option>Test2</option>\n            </select>\n            ")
+            .open();
+    };
     configLoader = __decorate([
         core_1.Component({
             selector: 'config-loader',
-            template: "\n\n<span defaultOverlayTarget></span>\n\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"getConfig()\" id=\"config\">\n    <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span> Get Config\n</button>\n\n",
+            template: "\n\n<span defaultOverlayTarget></span>\n\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"getConfig()\" id=\"config\">\n    <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span> Get Config\n</button>\n\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"chooseConfig()\" id=\"cconfig\">\n    <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span> Choose Config\n</button>\n\n",
             providers: [bootstrap_1.Modal]
         }), 
         __metadata('design:paramtypes', [app_server_communication_1.ServerCommunication, bootstrap_1.Modal])

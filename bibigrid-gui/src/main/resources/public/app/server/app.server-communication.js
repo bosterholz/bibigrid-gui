@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", {value: true});
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var http_2 = require("@angular/http");
@@ -22,10 +23,10 @@ var ServerCommunication = (function () {
         this.getUrl = "http://localhost:8080/resource";
         this.sendUrl = "http://localhost:8080//process";
         this.ansUrl = "http://localhost:8080/answer";
-        this.configUrl = "app/shared/config.json";
     }
-    ServerCommunication.prototype.getConfig = function () {
-        return this.http.get(this.configUrl)
+
+    ServerCommunication.prototype.getConfig = function (confPath) {
+        return this.http.get(confPath)
             .map(this.extractData)
             .catch(this.handleError);
     };

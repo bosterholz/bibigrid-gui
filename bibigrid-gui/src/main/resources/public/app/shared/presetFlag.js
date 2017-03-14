@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", {value: true});
 var presetFlag = (function () {
     function presetFlag(sFlag, value) {
         this.sFlag = sFlag;

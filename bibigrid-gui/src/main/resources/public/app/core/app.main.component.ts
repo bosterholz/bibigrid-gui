@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewChecked} from "@angular/core";
+import {Component, OnInit, AfterViewChecked, Input} from "@angular/core";
 import {Observable}     from 'rxjs/Observable';
 
 import {ServerCommunication} from "../server/app.server-communication";
@@ -79,6 +79,7 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
 
 export class mainPage implements OnInit,AfterViewChecked {
 
+    @Input() userMode: string;
     errorMessage: string;
     flags: Flag[];
     mode = 'Observable';
@@ -136,6 +137,7 @@ export class mainPage implements OnInit,AfterViewChecked {
                 answer => this.txtField += answer,
                 error => this.errorMessage = <any>error);
         this.txtField += '\n';
+        console.log(this.userMode);
     }
 
     sendFlags() {
@@ -175,7 +177,8 @@ export class mainPage implements OnInit,AfterViewChecked {
                 field = '<input type="string" id="' + name + '">';
                 break;
             default:
-                "";
+                field = '<input type="text" id="' + name + '">';
+                break;
         }
 
         return field;

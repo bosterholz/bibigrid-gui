@@ -9,27 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var app_server_communication_1 = require("./server/app.server-communication");
-var app_bibigrid_gui_navbar_1 = require('./core/app.bibigrid-gui.navbar');
 var BiBiGridGui = (function () {
-    function BiBiGridGui(server) {
-        this.server = server;
-        this.seeit = false;
+    function BiBiGridGui() {
+        this.welcomePage = true;
     }
-    BiBiGridGui.prototype.ngOnInit = function () {
-    };
-    BiBiGridGui.prototype.ngAfterViewChecked = function () {
-    };
-    BiBiGridGui.prototype.setSwitch = function () {
-        this.seeit = !this.seeit;
+
+    BiBiGridGui.prototype.setMode = function (mode) {
+        this.welcomePage = !this.welcomePage;
+        this.mode = mode;
     };
     BiBiGridGui = __decorate([
         core_1.Component({
             selector: 'bibigui',
-            template: "\n<welcome *ngIf=\"seeit\"></welcome>\n<mainpage *ngIf=\"!seeit\"></mainpage>\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"setSwitch()\" id=\"switch\">\nSwitch\n</button>\n<!--<navbar ></navbar>-->\n\n",
-            providers: [app_server_communication_1.ServerCommunication, app_bibigrid_gui_navbar_1.BiBiGridGuiNavbar]
-        }), 
-        __metadata('design:paramtypes', [app_server_communication_1.ServerCommunication])
+            template: "\n<welcome (notify)='setMode($event)' *ngIf=\"welcomePage\" ></welcome>\n<mainpage [userMode]='mode' *ngIf=\"!welcomePage\"></mainpage>\n",
+            providers: []
+        }),
+        __metadata('design:paramtypes', [])
     ], BiBiGridGui);
     return BiBiGridGui;
 }());
