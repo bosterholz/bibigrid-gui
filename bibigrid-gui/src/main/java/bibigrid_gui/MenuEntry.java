@@ -10,12 +10,14 @@ public class MenuEntry {
     private final String lFlag;
     private final String sDescription;
     private final String type;
+    private final String guiGroup;
 
-    public MenuEntry(String sFlag, String lFlag, String sDescription, Tprimitive type) {
+    public MenuEntry(String sFlag, String lFlag, String sDescription, Tprimitive type, String guiGroup) {
 
         this.sFlag = sFlag;
         this.lFlag = lFlag;
         this.sDescription = sDescription;
+        this.guiGroup = guiGroup;
 
         if (type == null) {
             this.type = "NONE";
@@ -40,5 +42,9 @@ public class MenuEntry {
 
     public String getsFlag() {
         return sFlag;
+    }
+
+    public String getGuiGroup() {
+        return guiGroup;
     }
 }

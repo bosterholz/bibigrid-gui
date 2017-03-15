@@ -13,7 +13,6 @@ var BiBiGridGui = (function () {
     function BiBiGridGui() {
         this.welcomePage = true;
     }
-
     BiBiGridGui.prototype.setMode = function (mode) {
         this.welcomePage = !this.welcomePage;
         this.mode = mode;
@@ -23,7 +22,7 @@ var BiBiGridGui = (function () {
             selector: 'bibigui',
             template: "\n<welcome (notify)='setMode($event)' *ngIf=\"welcomePage\" ></welcome>\n<mainpage [userMode]='mode' *ngIf=\"!welcomePage\"></mainpage>\n",
             providers: []
-        }),
+        }), 
         __metadata('design:paramtypes', [])
     ], BiBiGridGui);
     return BiBiGridGui;

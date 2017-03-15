@@ -49,7 +49,7 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
       </tr>
     </thead>
 <tbody>
-<tr *ngFor="let flag of flags"><th>{{flag.sFlag}}</th><th>{{flag.lFlag}}</th><th>{{flag.sDescription}}</th><th [ngSwitch]="flag.type"><div class="input-group">
+<tr *ngFor="let flag of flags" [attr.class]='flag.guiGroup'><th>{{flag.sFlag}}</th><th>{{flag.lFlag}}</th><th>{{flag.sDescription}}</th><th [ngSwitch]="flag.type"><div class="input-group">
                                                                                                                                         <input *ngSwitchCase="'string'" class="form-control" type="text" id="{{flag.sFlag}}">
                                                                                                                                         <input *ngSwitchCase="'int'" class="form-control" type="number" id="{{flag.sFlag}}">
                                                                                                                                         <input *ngSwitchCase="'float'" class="form-control" type="number" step="any" id="{{flag.sFlag}}">
@@ -62,6 +62,10 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
 
 <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="sendFlags()" id="submit">
     <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit
+</button>
+
+<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="hideElem()" id="hide">
+    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Hide
 </button>
 
 <config-loader></config-loader>
@@ -84,6 +88,7 @@ export class mainPage implements OnInit,AfterViewChecked {
     flags: Flag[];
     mode = 'Observable';
     txtField: string = "";
+    idCount: number = 0;
 
     ngOnInit() {
         this.getFlags();
@@ -91,6 +96,17 @@ export class mainPage implements OnInit,AfterViewChecked {
 
     ngAfterViewChecked() {
         this.scrollDown();
+    }
+
+    createID(test: string): string {
+        let buffer: string = "row" + this.idCount;
+        this.idCount += 1;
+        console.log(test);
+        return buffer;
+    }
+
+    hideElem() {
+        (<HTMLInputElement>document.getElementById("row49")).style.display = 'none';
     }
 
 
@@ -104,16 +120,16 @@ export class mainPage implements OnInit,AfterViewChecked {
                 switch ((<HTMLInputElement>document.getElementById(flag.sFlag)).type) {
                     case "text":
                         var fieldValue = (<HTMLInputElement>document.getElementById(flag.sFlag)).value;
-                        tmp.push(new Flag(flag.sFlag, flag.lFlag, fieldValue, flag.type));
+                        tmp.push(new Flag(flag.sFlag, flag.lFlag, fieldValue, flag.type, flag.guiGroup));
                         break;
                     case "checkbox":
                         if ((<HTMLInputElement>document.getElementById(flag.sFlag)).checked) {
-                            tmp.push(new Flag(flag.sFlag, flag.lFlag, "", flag.type));
+                            tmp.push(new Flag(flag.sFlag, flag.lFlag, "", flag.type, flag.guiGroup));
                         }
                         break;
                     default:
                         var fieldValue = (<HTMLInputElement>document.getElementById(flag.sFlag)).value;
-                        tmp.push(new Flag(flag.sFlag, flag.lFlag, fieldValue, flag.type));
+                        tmp.push(new Flag(flag.sFlag, flag.lFlag, fieldValue, flag.type, flag.guiGroup));
                         break;
                 }
             }

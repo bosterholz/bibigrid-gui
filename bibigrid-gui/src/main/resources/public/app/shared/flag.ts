@@ -4,6 +4,7 @@ export class Flag {
         public sFlag: string,
         public lFlag: string,
         public sDescription: string,
-        public type: string
+        public type: string,
+        public guiGroup: string
     ){}
 }

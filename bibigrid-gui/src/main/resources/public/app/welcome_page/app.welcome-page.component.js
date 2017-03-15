@@ -14,7 +14,6 @@ var welcomePage = (function () {
     function welcomePage() {
         this.notify = new core_1.EventEmitter();
     }
-
     welcomePage.prototype.chooseMode = function (choice) {
         this.notify.emit(choice);
     };

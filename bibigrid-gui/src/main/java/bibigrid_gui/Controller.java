@@ -89,8 +89,9 @@ public class Controller {
             String lFlag = tp.getOption();
             String sDescription = tp.getShortDescription().get(0).getValue();
             Tprimitive type = tp.getType();
+            String guiGroup = tp.getGuiElement();
 
-            menuList.add(new MenuEntry(sFlag, lFlag, sDescription, type));
+            menuList.add(new MenuEntry(sFlag, lFlag, sDescription, type, guiGroup));
         }
 
         MenuEntry[] tmp = new MenuEntry[menuList.size()];

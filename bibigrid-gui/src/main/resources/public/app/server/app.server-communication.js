@@ -8,15 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", {value: true});
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var http_2 = require("@angular/http");
-var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/catch");
-require("rxjs/add/observable/throw");
-var json_wrapper_1 = require("./json.wrapper");
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+var http_2 = require('@angular/http');
+var Observable_1 = require('rxjs/Observable');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/catch');
+require('rxjs/add/observable/throw');
+var json_wrapper_1 = require('./json.wrapper');
 var ServerCommunication = (function () {
     function ServerCommunication(http) {
         this.http = http;
@@ -24,7 +23,6 @@ var ServerCommunication = (function () {
         this.sendUrl = "http://localhost:8080//process";
         this.ansUrl = "http://localhost:8080/answer";
     }
-
     ServerCommunication.prototype.getConfig = function (confPath) {
         return this.http.get(confPath)
             .map(this.extractData)
@@ -65,11 +63,11 @@ var ServerCommunication = (function () {
         console.error(errMsg);
         return Observable_1.Observable.throw(errMsg);
     };
+    ServerCommunication = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], ServerCommunication);
     return ServerCommunication;
 }());
-ServerCommunication = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
-], ServerCommunication);
 exports.ServerCommunication = ServerCommunication;
 //# sourceMappingURL=app.server-communication.js.map
