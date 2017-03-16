@@ -88,25 +88,38 @@ export class mainPage implements OnInit,AfterViewChecked {
     flags: Flag[];
     mode = 'Observable';
     txtField: string = "";
-    idCount: number = 0;
+
 
     ngOnInit() {
         this.getFlags();
     }
 
     ngAfterViewChecked() {
+
         this.scrollDown();
+        this.hideModeElem();
     }
 
-    createID(test: string): string {
-        let buffer: string = "row" + this.idCount;
-        this.idCount += 1;
-        console.log(test);
-        return buffer;
-    }
 
-    hideElem() {
-        (<HTMLInputElement>document.getElementById("row49")).style.display = 'none';
+    hideModeElem() {
+
+        if (this.userMode === "intermediate" || this.userMode === "beginner") {
+
+            let elements = (document.getElementsByClassName("expert"));
+
+            for (let i = 0; i < elements.length; i++) {
+                (<HTMLInputElement>elements[i]).style.display = 'none';
+            }
+        }
+
+        if (this.userMode === "beginner") {
+
+            let elements = (document.getElementsByClassName("intermediate"));
+
+            for (let i = 0; i < elements.length; i++) {
+                (<HTMLInputElement>elements[i]).style.display = 'none';
+            }
+        }
     }
 
 

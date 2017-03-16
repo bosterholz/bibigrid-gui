@@ -17,22 +17,27 @@ var mainPage = (function () {
         this.server = server;
         this.mode = 'Observable';
         this.txtField = "";
-        this.idCount = 0;
     }
     mainPage.prototype.ngOnInit = function () {
         this.getFlags();
     };
     mainPage.prototype.ngAfterViewChecked = function () {
         this.scrollDown();
+        this.hideModeElem();
     };
-    mainPage.prototype.createID = function (test) {
-        var buffer = "row" + this.idCount;
-        this.idCount += 1;
-        console.log(test);
-        return buffer;
-    };
-    mainPage.prototype.hideElem = function () {
-        document.getElementById("row49").style.display = 'none';
+    mainPage.prototype.hideModeElem = function () {
+        if (this.userMode === "intermediate" || this.userMode === "beginner") {
+            var elements = (document.getElementsByClassName("expert"));
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = 'none';
+            }
+        }
+        if (this.userMode === "beginner") {
+            var elements = (document.getElementsByClassName("intermediate"));
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = 'none';
+            }
+        }
     };
     mainPage.prototype.readFields = function () {
         var tmp = [];
