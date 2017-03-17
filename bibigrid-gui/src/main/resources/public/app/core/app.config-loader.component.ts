@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {FormsModule} from '@angular/forms';
 import {Modal} from 'angular2-modal/plugins/bootstrap';
 import {ServerCommunication} from "../server/app.server-communication";
 import {presetFlag} from '../shared/presetFlag';
@@ -9,13 +10,30 @@ import {presetFlag} from '../shared/presetFlag';
 
 <span defaultOverlayTarget></span>
 
-<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="getConfig()" id="config">
-    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Get Config
+<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#configModal" (click)="getMasterConfig()">
+  choose config
 </button>
 
-<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="chooseConfig()" id="cconfig">
-    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Choose Config
-</button>
+<div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="configModalLabel">Load predefined configuration</h4>
+      </div>
+        <div class="modal-body">
+            <h2>Select configuration</h2>
+                <select [(ngModel)]="selectedCity">
+                    <option *ngFor="let c of cities" [ngValue]="c"> {{c.sFlag}} </option>
+                </select>
+                {{selectedCity.value}}
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 `,
     providers: [Modal]
@@ -24,18 +42,23 @@ import {presetFlag} from '../shared/presetFlag';
 export class configLoader {
 
     errorMessage: string;
-    private masterConfigUrl: string = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/config.json";
-
+    private masterConfigUrl: string = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/MeRaGene.json";
+    cities = [{'sFlag': 'SF', 'value': 'SF'}];
+    selectedCity = this.cities[0];
 
     constructor(private server: ServerCommunication, public modal: Modal) {
     }
 
-    getConfig() {
+    getMasterConfig() {
 
         this.server.getConfig(this.masterConfigUrl)
             .subscribe(
-                conf => this.setConfig(conf),
+                conf => this.listFoundConfigs(conf),
                 error => this.errorMessage = <any>error);
+    }
+
+    listFoundConfigs(configLinks: presetFlag[]) {
+        this.cities = configLinks;
     }
 
     setConfig(config: presetFlag[]) { // Alle Felder vorher löschen, damit nur die Config übernommen wird
@@ -73,25 +96,13 @@ export class configLoader {
 
     chooseConfig() {
 
-        this.modal.alert()
+        this.modal.confirm()
             .size('lg')
             .showClose(false)
             .body(`
-            <div class="dropdown">
-            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown trigger
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dLabel">
-                <li><a href="#">Test1</a></li>
-                <li><a href="#">Test2</a></li>
-                <li><a href="#">Test3</a></li>
-            </ul>
-            </div>  
-             
-            <select>
-                <option>Test</option>
-                <option>Test2</option>
+            <h2>Select demo</h2>
+            <select [(ngModel)]="selectedCity" (ngModelChange)="onChange($event)" >
+                <option *ngFor="let c of cities" [ngValue]="c"> {{c.name}} </option>
             </select>
             `)
             .open();

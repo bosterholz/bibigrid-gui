@@ -64,10 +64,6 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
     <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit
 </button>
 
-<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="hideElem()" id="hide">
-    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Hide
-</button>
-
 <config-loader></config-loader>
 
 <br>

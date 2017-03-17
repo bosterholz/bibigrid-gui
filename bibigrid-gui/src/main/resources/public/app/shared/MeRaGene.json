@@ -1,6 +1,9 @@
 {
   "data": [
-    { "sFlag": "m", "value": "Windstorm" },
+    {
+      "sFlag": "m",
+      "value": "MeRaGene"
+    },
     { "sFlag": "mme", "value": "15" },
     { "sFlag": "M", "value": "Magneta" },
     { "sFlag": "Xop", "value": "Magneta" },

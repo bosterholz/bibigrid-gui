@@ -15,12 +15,17 @@ var configLoader = (function () {
     function configLoader(server, modal) {
         this.server = server;
         this.modal = modal;
-        this.masterConfigUrl = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/config.json";
+        this.masterConfigUrl = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/MeRaGene.json";
+        this.cities = [{ 'sFlag': 'SF', 'value': 'SF' }];
+        this.selectedCity = this.cities[0];
     }
-    configLoader.prototype.getConfig = function () {
+    configLoader.prototype.getMasterConfig = function () {
         var _this = this;
         this.server.getConfig(this.masterConfigUrl)
-            .subscribe(function (conf) { return _this.setConfig(conf); }, function (error) { return _this.errorMessage = error; });
+            .subscribe(function (conf) { return _this.listFoundConfigs(conf); }, function (error) { return _this.errorMessage = error; });
+    };
+    configLoader.prototype.listFoundConfigs = function (configLinks) {
+        this.cities = configLinks;
     };
     configLoader.prototype.setConfig = function (config) {
         var error = false;
@@ -49,16 +54,16 @@ var configLoader = (function () {
         }
     };
     configLoader.prototype.chooseConfig = function () {
-        this.modal.alert()
+        this.modal.confirm()
             .size('lg')
             .showClose(false)
-            .body("\n            <div class=\"dropdown\">\n            <button id=\"dLabel\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            Dropdown trigger\n            <span class=\"caret\"></span>\n            </button>\n            <ul class=\"dropdown-menu\" aria-labelledby=\"dLabel\">\n                <li><a href=\"#\">Test1</a></li>\n                <li><a href=\"#\">Test2</a></li>\n                <li><a href=\"#\">Test3</a></li>\n            </ul>\n            </div>  \n             \n            <select>\n                <option>Test</option>\n                <option>Test2</option>\n            </select>\n            ")
+            .body("\n            <h2>Select demo</h2>\n            <select [(ngModel)]=\"selectedCity\" (ngModelChange)=\"onChange($event)\" >\n                <option *ngFor=\"let c of cities\" [ngValue]=\"c\"> {{c.name}} </option>\n            </select>\n            ")
             .open();
     };
     configLoader = __decorate([
         core_1.Component({
             selector: 'config-loader',
-            template: "\n\n<span defaultOverlayTarget></span>\n\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"getConfig()\" id=\"config\">\n    <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span> Get Config\n</button>\n\n<button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" (click)=\"chooseConfig()\" id=\"cconfig\">\n    <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span> Choose Config\n</button>\n\n",
+            template: "\n\n<span defaultOverlayTarget></span>\n\n<button type=\"button\" class=\"btn btn-primary btn-block\" data-toggle=\"modal\" data-target=\"#configModal\" (click)=\"getMasterConfig()\">\n  choose config\n</button>\n\n<div class=\"modal fade\" id=\"configModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"configModalLabel\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"configModalLabel\">Load predefined configuration</h4>\n      </div>\n        <div class=\"modal-body\">\n            <h2>Select configuration</h2>\n                <select [(ngModel)]=\"selectedCity\">\n                    <option *ngFor=\"let c of cities\" [ngValue]=\"c\"> {{c.sFlag}} </option>\n                </select>\n                {{selectedCity.value}}\n        </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n",
             providers: [bootstrap_1.Modal]
         }), 
         __metadata('design:paramtypes', [app_server_communication_1.ServerCommunication, bootstrap_1.Modal])
