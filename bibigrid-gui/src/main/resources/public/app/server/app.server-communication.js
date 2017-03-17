@@ -28,6 +28,11 @@ var ServerCommunication = (function () {
             .map(this.extractData)
             .catch(this.handleError);
     };
+    ServerCommunication.prototype.getConfLinks = function (confPath) {
+        return this.http.get(confPath)
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
     ServerCommunication.prototype.getFlags = function () {
         return this.http.get(this.getUrl)
             .map(this.extractData)

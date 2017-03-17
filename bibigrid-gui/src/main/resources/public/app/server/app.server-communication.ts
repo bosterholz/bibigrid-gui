@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 
 import {Flag} from '../shared/flag';
 import {presetFlag} from '../shared/presetFlag';
+import {configLink} from '../shared/configLink';
 import {JsonWrapper} from './json.wrapper'
 
 
@@ -22,6 +23,12 @@ export class ServerCommunication {
     }
 
     getConfig(confPath: string): Observable<presetFlag[]> {
+        return this.http.get(confPath)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getConfLinks(confPath: string): Observable<configLink[]> {
         return this.http.get(confPath)
             .map(this.extractData)
             .catch(this.handleError);

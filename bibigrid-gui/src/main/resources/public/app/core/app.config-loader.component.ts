@@ -3,6 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {Modal} from 'angular2-modal/plugins/bootstrap';
 import {ServerCommunication} from "../server/app.server-communication";
 import {presetFlag} from '../shared/presetFlag';
+import {configLink} from '../shared/configLink';
 
 @Component({
     selector: 'config-loader',
@@ -22,14 +23,14 @@ import {presetFlag} from '../shared/presetFlag';
       </div>
         <div class="modal-body">
             <h2>Select configuration</h2>
-                <select [(ngModel)]="selectedCity">
-                    <option *ngFor="let c of cities" [ngValue]="c"> {{c.sFlag}} </option>
+                <select [(ngModel)]="selectedLinks">
+                    <option *ngFor="let link of links" [ngValue]="link"> {{link.name}} </option>
                 </select>
-                {{selectedCity.value}}
+                {{selectedLinks.description}}
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="getConfig()">Load configuration</button>
       </div>
     </div>
   </div>
@@ -43,22 +44,30 @@ export class configLoader {
 
     errorMessage: string;
     private masterConfigUrl: string = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/masterConfig.json";
-    cities = [{'sFlag': 'SF', 'value': 'SF'}];
-    selectedCity = this.cities[0];
+    links = [{'name': '', 'description': '', 'link': ""}];
+    selectedLinks = this.links[0];
 
     constructor(private server: ServerCommunication, public modal: Modal) {
     }
 
     getMasterConfig() {
 
-        this.server.getConfig(this.masterConfigUrl)
+        this.server.getConfLinks(this.masterConfigUrl)
             .subscribe(
                 conf => this.listFoundConfigs(conf),
                 error => this.errorMessage = <any>error);
     }
 
-    listFoundConfigs(configLinks: presetFlag[]) {
-        this.cities = configLinks;
+    getConfig() {
+
+        this.server.getConfig(this.selectedLinks.link)
+            .subscribe(
+                conf => this.setConfig(conf),
+                error => this.errorMessage = <any>error);
+    }
+
+    listFoundConfigs(configLinks: configLink[]) {
+        this.links = configLinks;
     }
 
     setConfig(config: presetFlag[]) { // Alle Felder vorher löschen, damit nur die Config übernommen wird
@@ -79,7 +88,7 @@ export class configLoader {
             }
         }
 
-        if (error) {
+        if (error) { // modal gegen eigenes ersetzen
             this.modal.alert()
                 .size('lg')
                 .showClose(false)
