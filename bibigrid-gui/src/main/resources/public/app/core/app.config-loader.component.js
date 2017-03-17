@@ -8,14 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", {value: true});
 var core_1 = require("@angular/core");
-var bootstrap_1 = require('angular2-modal/plugins/bootstrap');
+var bootstrap_1 = require("angular2-modal/plugins/bootstrap");
 var app_server_communication_1 = require("../server/app.server-communication");
 var configLoader = (function () {
     function configLoader(server, modal) {
         this.server = server;
         this.modal = modal;
-        this.masterConfigUrl = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/MeRaGene.json";
+        this.masterConfigUrl = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/masterConfig.json";
         this.cities = [{ 'sFlag': 'SF', 'value': 'SF' }];
         this.selectedCity = this.cities[0];
     }
@@ -60,15 +61,15 @@ var configLoader = (function () {
             .body("\n            <h2>Select demo</h2>\n            <select [(ngModel)]=\"selectedCity\" (ngModelChange)=\"onChange($event)\" >\n                <option *ngFor=\"let c of cities\" [ngValue]=\"c\"> {{c.name}} </option>\n            </select>\n            ")
             .open();
     };
-    configLoader = __decorate([
-        core_1.Component({
-            selector: 'config-loader',
-            template: "\n\n<span defaultOverlayTarget></span>\n\n<button type=\"button\" class=\"btn btn-primary btn-block\" data-toggle=\"modal\" data-target=\"#configModal\" (click)=\"getMasterConfig()\">\n  choose config\n</button>\n\n<div class=\"modal fade\" id=\"configModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"configModalLabel\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"configModalLabel\">Load predefined configuration</h4>\n      </div>\n        <div class=\"modal-body\">\n            <h2>Select configuration</h2>\n                <select [(ngModel)]=\"selectedCity\">\n                    <option *ngFor=\"let c of cities\" [ngValue]=\"c\"> {{c.sFlag}} </option>\n                </select>\n                {{selectedCity.value}}\n        </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n",
-            providers: [bootstrap_1.Modal]
-        }), 
-        __metadata('design:paramtypes', [app_server_communication_1.ServerCommunication, bootstrap_1.Modal])
-    ], configLoader);
     return configLoader;
 }());
+configLoader = __decorate([
+    core_1.Component({
+        selector: 'config-loader',
+        template: "\n\n<span defaultOverlayTarget></span>\n\n<button type=\"button\" class=\"btn btn-primary btn-block\" data-toggle=\"modal\" data-target=\"#configModal\" (click)=\"getMasterConfig()\">\n  choose config\n</button>\n\n<div class=\"modal fade\" id=\"configModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"configModalLabel\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"configModalLabel\">Load predefined configuration</h4>\n      </div>\n        <div class=\"modal-body\">\n            <h2>Select configuration</h2>\n                <select [(ngModel)]=\"selectedCity\">\n                    <option *ngFor=\"let c of cities\" [ngValue]=\"c\"> {{c.sFlag}} </option>\n                </select>\n                {{selectedCity.value}}\n        </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n",
+        providers: [bootstrap_1.Modal]
+    }),
+    __metadata("design:paramtypes", [app_server_communication_1.ServerCommunication, bootstrap_1.Modal])
+], configLoader);
 exports.configLoader = configLoader;
 //# sourceMappingURL=app.config-loader.component.js.map

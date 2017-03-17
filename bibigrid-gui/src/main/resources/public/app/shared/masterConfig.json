@@ -3,17 +3,17 @@
     {
       "name": "AGenDA  (dummy)",
       "description": "Alignment-based Gene Detection Algorithm",
-      "link": ""
+      "link": "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/AGenDA.json"
     },
     {
       "name": "MeRaGENE (dummy)",
       "description": "Metagenomics rapid gene identification pipeline",
-      "link": ""
+      "link": "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/MeRaGene.json"
     },
     {
       "name": "Gecko (dummy)",
       "description": "GEne Cluster detection in proKaryOtes",
-      "link": ""
+      "link": "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/Gecko.json"
     }
   ]
 }

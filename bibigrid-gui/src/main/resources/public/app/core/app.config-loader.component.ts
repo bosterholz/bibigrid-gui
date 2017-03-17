@@ -42,7 +42,7 @@ import {presetFlag} from '../shared/presetFlag';
 export class configLoader {
 
     errorMessage: string;
-    private masterConfigUrl: string = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/MeRaGene.json";
+    private masterConfigUrl: string = "https://raw.githubusercontent.com/bosterholz/bibigrid-gui/master/bibigrid-gui/src/main/resources/public/app/shared/masterConfig.json";
     cities = [{'sFlag': 'SF', 'value': 'SF'}];
     selectedCity = this.cities[0];
 
