@@ -28,7 +28,7 @@ import {configLoader} from '../core/app.config-loader.component';
     </div>
   </div>
 </nav>
-   <div class="container-fluid text-center">
+   <div class="container-fluid text-center" style="width:80%">
 <br>
 <br>
 <h1>BiBiGrid</h1> 
@@ -60,14 +60,20 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
 </tbody>
 </table>
 
-<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="sendFlags()" id="submit">
-    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit
-</button>
+<br>
+<br>
 
 <config-loader></config-loader>
 
 <br>
+
+<button class="btn btn-primary btn-lg btn-block" type="submit" (click)="sendFlags()" id="submit">
+    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> submit
+</button>
+
 <br>
+<br>
+
  <div class="form-group">
   <label for="output"><h3>Output:</h3></label>
   <textarea class="form-control" rows="10" id="output" disabled="true">{{txtField}}</textarea>

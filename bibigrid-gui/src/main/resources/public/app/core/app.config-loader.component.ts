@@ -1,6 +1,4 @@
 import {Component} from "@angular/core";
-import {FormsModule} from '@angular/forms';
-import {Modal} from 'angular2-modal/plugins/bootstrap';
 import {ServerCommunication} from "../server/app.server-communication";
 import {presetFlag} from '../shared/presetFlag';
 import {configLink} from '../shared/configLink';
@@ -9,24 +7,32 @@ import {configLink} from '../shared/configLink';
     selector: 'config-loader',
     template: `
 
-<span defaultOverlayTarget></span>
-
-<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#configModal" (click)="getMasterConfig()">
-  choose config
+<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#configModal" (click)="getMasterConfig()">
+  <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> load configuration
 </button>
 
 <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="configModalLabel">Load predefined configuration</h4>
+        <h4 class="modal-title" id="configModalLabel">Load configuration</h4>
       </div>
         <div class="modal-body">
-            <h2>Select configuration</h2>
+            <h2 align="center">Select configuration</h2>
+            load predefined pipeline configurations from the internet
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                <br>
                 <select [(ngModel)]="selectedLinks">
                     <option *ngFor="let link of links" [ngValue]="link"> {{link.name}} </option>
                 </select>
+                </div>
+                <div class="col-sm-6">
+                <br>
                 {{selectedLinks.description}}
+                </div>
+            </div>
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -36,8 +42,31 @@ import {configLink} from '../shared/configLink';
   </div>
 </div>
 
+
+<button id="errorButton" [hidden]="true" data-toggle="modal" data-target="#errorModal">
+  error modal
+</button>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="errorModalLabel">Configuration invalide:</h4>
+      </div>
+        <div class="modal-body">
+            Some flags defined by the configuration file you are loading, are missing in BiBiGrid.
+            Either your configuration file is outdated/falty or your BiBiGrid version is too old.
+            Missing flags are skipped. The program may not function properly.            
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 `,
-    providers: [Modal]
+    providers: []
 })
 
 export class configLoader {
@@ -47,7 +76,7 @@ export class configLoader {
     links = [{'name': '', 'description': '', 'link': ""}];
     selectedLinks = this.links[0];
 
-    constructor(private server: ServerCommunication, public modal: Modal) {
+    constructor(private server: ServerCommunication) {
     }
 
     getMasterConfig() {
@@ -88,32 +117,8 @@ export class configLoader {
             }
         }
 
-        if (error) { // modal gegen eigenes ersetzen
-            this.modal.alert()
-                .size('lg')
-                .showClose(false)
-                .body(`
-            <b>Configuration file invalide:</b>
-            <br>
-            Some flags defined by the configuration file you are loading, are missing in BiBiGrid.
-            Either your configuration file is outdated/falty or your BiBiGrid version is too old.
-            Missing flags are skipped. The program may not function properly.   
-            `)
-                .open();
+        if (error) {
+            (<HTMLInputElement>document.getElementById("errorButton")).click();
         }
-    }
-
-    chooseConfig() {
-
-        this.modal.confirm()
-            .size('lg')
-            .showClose(false)
-            .body(`
-            <h2>Select demo</h2>
-            <select [(ngModel)]="selectedCity" (ngModelChange)="onChange($event)" >
-                <option *ngFor="let c of cities" [ngValue]="c"> {{c.name}} </option>
-            </select>
-            `)
-            .open();
     }
 }
