@@ -36,7 +36,7 @@ import {configLink} from '../shared/configLink';
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="getConfig()">Load configuration</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#clearModal">Load configuration</button>
       </div>
     </div>
   </div>
@@ -60,6 +60,29 @@ import {configLink} from '../shared/configLink';
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button id="clearButton" [hidden]="true" data-toggle="modal" data-target="#clearModal">
+  error modal
+</button>
+
+<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="clearModalLabel">Clear options:</h4>
+      </div>
+        <div class="modal-body">
+            Do you want to clear all input fields bevor loading the configuration parameters ?
+            The configuration file will be loaded exactly as it is therefore your own inputs will be deleted.
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="clearList()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="getConfig()">No</button>
       </div>
     </div>
   </div>
@@ -99,7 +122,26 @@ export class configLoader {
         this.links = configLinks;
     }
 
-    setConfig(config: presetFlag[]) { // Alle Felder vorher löschen, damit nur die Config übernommen wird
+    clearList() {
+
+        let elements = (document.getElementsByName("flag"));
+
+        for (let i = 0; i < elements.length; i++) {
+
+            switch ((<HTMLInputElement>elements[i]).type) {
+                case "checkbox":
+                    (<HTMLInputElement>elements[i]).checked = false;
+                    break;
+                default:
+                    (<HTMLInputElement>elements[i]).value = "";
+                    break;
+            }
+        }
+
+        this.getConfig();
+    }
+
+    setConfig(config: presetFlag[]) {
         let error: boolean = false;
 
         for (let flag of config) {

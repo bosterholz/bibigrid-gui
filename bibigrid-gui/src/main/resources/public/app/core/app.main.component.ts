@@ -50,11 +50,11 @@ BiBiGrid offers an easy configuration and maintenance of a started cluster via c
     </thead>
 <tbody>
 <tr *ngFor="let flag of flags" [attr.class]='flag.guiGroup'><th>{{flag.sFlag}}</th><th>{{flag.lFlag}}</th><th>{{flag.sDescription}}</th><th [ngSwitch]="flag.type"><div class="input-group">
-                                                                                                                                        <input *ngSwitchCase="'string'" class="form-control" type="text" id="{{flag.sFlag}}">
-                                                                                                                                        <input *ngSwitchCase="'int'" class="form-control" type="number" id="{{flag.sFlag}}">
-                                                                                                                                        <input *ngSwitchCase="'float'" class="form-control" type="number" step="any" id="{{flag.sFlag}}">
-                                                                                                                                        <input *ngSwitchCase="'NONE'" class="form-control" type="checkbox" id="{{flag.sFlag}}">
-                                                                                                                                        <input *ngSwitchDefault class="form-control" type="text" id="{{flag.sFlag}}">
+                                                                                                                                        <input *ngSwitchCase="'string'" class="form-control" type="text" name="flag" id="{{flag.sFlag}}">
+                                                                                                                                        <input *ngSwitchCase="'int'" class="form-control" type="number" name="flag" id="{{flag.sFlag}}">
+                                                                                                                                        <input *ngSwitchCase="'float'" class="form-control" type="number" step="any" name="flag" id="{{flag.sFlag}}">
+                                                                                                                                        <input *ngSwitchCase="'NONE'" class="form-control" type="checkbox" name="flag" id="{{flag.sFlag}}">
+                                                                                                                                        <input *ngSwitchDefault class="form-control" type="text" name="flag" id="{{flag.sFlag}}">
                                                                                                                                         <span class="input-group-addon" id="addon-type">{{flag.type}}</span></div></th></tr>
 
 </tbody>
